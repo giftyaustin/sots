@@ -84,6 +84,24 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.28</version> <!-- Replace with the version you are using -->
 		</dependency>
+
+
+		<!-- ==== CLoudinary ===== -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.36.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-taglib</artifactId>
+			<version>1.36.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>2.2.4</version>
+		</dependency>
 		
 		
 		
