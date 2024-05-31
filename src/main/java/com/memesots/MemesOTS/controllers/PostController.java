@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/")
@@ -43,7 +42,6 @@ public class PostController {
     public ResponseEntity<AddPostResponseDTO> addPost(@RequestBody Map<String, String> post) {
         AddPostResponseDTO response = new AddPostResponseDTO();
         Post newPost = new Post();
-        newPost.setCategory(post.get("post_category"));
         String cloudinaryImgUrl;
         try {
             String base64 = post.get("post_img_url");
@@ -57,7 +55,6 @@ public class PostController {
             response.setMessage("Failed to upload image");
             return ResponseEntity.ok(response);
         }
-        newPost.setUrl(cloudinaryImgUrl);
         postRepository.save(newPost);
         response.setStatus(true);
         response.setMessage("Post added");

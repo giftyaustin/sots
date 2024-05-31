@@ -18,7 +18,6 @@ public class CloudinaryConfig {
 
     @Bean
     public Cloudinary cloudinary (){
-        System.out.println(dotenv.get("CLOUDINARY_URL")+"-===0++========++====++=+=+=+++==+");
         return new Cloudinary(dotenv.get("CLOUDINARY_URL"));
     }
 }
