@@ -1,6 +1,6 @@
 package com.memesots.MemesOTS.controllers;
 
-import java.util.Base64;
+
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +44,10 @@ public class PostController {
         Post newPost = new Post();
         String cloudinaryImgUrl;
         try {
-            String base64 = post.get("post_img_url");
-            // System.out.println(base64);
-            // byte[] image = Base64.getDecoder().decode(base64);
-
+            String base64 = post.get("img_url");
            cloudinaryImgUrl =  imageUploader.uploadImage(base64, "test-folder");
+           newPost.setImgUrl(cloudinaryImgUrl);
+           newPost.setImgStorageCloudService("cloudinary");
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(false);
