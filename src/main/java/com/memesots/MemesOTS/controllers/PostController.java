@@ -4,10 +4,12 @@ package com.memesots.MemesOTS.controllers;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.memesots.MemesOTS.ExceptionHandlers.HttpException;
 import com.memesots.MemesOTS.dao.PostRepository;
 import com.memesots.MemesOTS.imageUploadService.ImageUploader;
 import com.memesots.MemesOTS.models.Post;
@@ -32,7 +34,11 @@ public class PostController {
     @Autowired ImageUploader imageUploader;
 
     @GetMapping("/get-posts")
-    public List<Post> getPosts() {
+    public List<Post> getPosts() throws HttpException {
+        System.out.println("======  post controller ========");
+        if(true){
+            throw new HttpException("test exception");
+        }
         return postRepository.findAll();
     }
 
