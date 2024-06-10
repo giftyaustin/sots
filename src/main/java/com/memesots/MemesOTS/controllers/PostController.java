@@ -35,10 +35,6 @@ public class PostController {
 
     @GetMapping("/get-posts")
     public List<Post> getPosts() throws HttpException {
-        System.out.println("======  post controller ========");
-        if(true){
-            throw new HttpException("test exception");
-        }
         return postRepository.findAll();
     }
 
