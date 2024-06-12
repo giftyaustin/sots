@@ -8,26 +8,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.memesots.MemesOTS.ExceptionHandlers.AppException;
+import com.memesots.MemesOTS.lib.enums.SignupServices;
+import com.memesots.MemesOTS.models.User;
 import com.memesots.MemesOTS.security.JwtService;
 import com.memesots.MemesOTS.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
-
 @RestController
 @RequestMapping("/")
 public class UserController {
-
-
 
     @Autowired
     private JwtService jwtService;
 
     @Autowired
     private UserService userService;
-
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerUser(@RequestBody Map<String, String> user) {
@@ -36,8 +33,7 @@ public class UserController {
         userService.saveUser(username);
         return new ResponseEntity<>(Map.of("message", "User registered successfully"), null, 200);
     }
-    
-    
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> authenticateUser(@RequestBody Map<String, String> user) {
         String username = user.get("username");
@@ -47,6 +43,30 @@ public class UserController {
             throw new RuntimeException("Invalid username/password");
         }
         String token = jwtService.generateToken(username);
+        Map<String, Object> response = Map.of("token", token);
+        return new ResponseEntity<>(response, null, 200);
+    }
+
+    @PostMapping("/google-signin")
+    public ResponseEntity<Map<String, Object>> googleAuthentication(@RequestBody Map<String, String> user)
+            throws AppException {
+        String email = user.get("email");
+        String profilePic = user.get("profile_pic");
+        if (email == null) {
+            throw new AppException(false, 400, "Email is required");
+        }
+        boolean doesUserExist = userService.doesUserExist(email);
+        if (doesUserExist) {
+            throw new AppException(false, 409, "User already exists");
+        }
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setUsername(email);
+        newUser.setProfilePic(profilePic);
+        newUser.setSignupService(SignupServices.GOOGLE);
+        userService.createUser(newUser);
+
+        String token = jwtService.generateToken(email);
         Map<String, Object> response = Map.of("token", token);
         return new ResponseEntity<>(response, null, 200);
     }
