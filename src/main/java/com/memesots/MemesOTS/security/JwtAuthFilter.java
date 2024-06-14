@@ -1,5 +1,6 @@
 package com.memesots.MemesOTS.security;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +24,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     AppUserDetailsService appUserDetailsService;
 
+
+    private static final List<String> EXCLUDED_URLS = List.of("/login", "/register", "/google-signin", "/get-posts");
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        System.out.println("JWT AUTH FILTER ===================");
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -41,9 +45,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-
         }
 
         filterChain.doFilter(request, response);
+    }
+
+
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request){
+        String path = request.getRequestURI();
+        return EXCLUDED_URLS.contains(path);
     }
 }

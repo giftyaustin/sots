@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.memesots.MemesOTS.ExceptionHandlers.AppException;
+import com.memesots.MemesOTS.dto.GoogleSigninDTO;
 import com.memesots.MemesOTS.lib.enums.SignupServices;
 import com.memesots.MemesOTS.models.User;
 import com.memesots.MemesOTS.security.JwtService;
 import com.memesots.MemesOTS.services.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -48,13 +52,10 @@ public class UserController {
     }
 
     @PostMapping("/google-signin")
-    public ResponseEntity<Map<String, Object>> googleAuthentication(@RequestBody Map<String, String> user)
+    public ResponseEntity<Map<String, Object>> googleAuthentication(@Valid @RequestBody GoogleSigninDTO user)
             throws AppException {
-        String email = user.get("email");
-        String profilePic = user.get("profile_pic");
-        if (email == null) {
-            throw new AppException(false, 400, "Email is required");
-        }
+        String email = user.getEmail();
+        String profilePic = user.getProfilePic();
         boolean doesUserExist = userService.doesUserExist(email);
         if (doesUserExist) {
             throw new AppException(false, 409, "User already exists");
