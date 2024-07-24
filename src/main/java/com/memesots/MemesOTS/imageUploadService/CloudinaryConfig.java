@@ -18,6 +18,6 @@ public class CloudinaryConfig {
 
     @Bean
     public Cloudinary cloudinary (){
-        return new Cloudinary(dotenv.get("CLOUDINARY_URL"));
+        return new Cloudinary("cloudinary://431446991821135:8O_HD2Z31bevKFNtxaAJ03_l_tE@mihles0");
     }
 }
