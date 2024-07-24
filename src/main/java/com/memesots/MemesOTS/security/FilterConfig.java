@@ -14,7 +14,6 @@ public class FilterConfig {
     public FilterRegistrationBean<JwtAuthFilter> jwtAuthRegistration(JwtAuthFilter jwtAuthFilter){
         FilterRegistrationBean<JwtAuthFilter> regBean = new FilterRegistrationBean<>();
         regBean.setFilter(jwtAuthFilter);
-        regBean.setUrlPatterns(List.of("/login", "/register", "/google-signin", "/get-posts"));
         return regBean;
     }
 }

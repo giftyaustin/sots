@@ -2,8 +2,11 @@ package com.memesots.MemesOTS.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,7 +40,16 @@ public class Post {
     @Column(name = "img_identifier")
     private String imgIdentifier;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userID;
+
+    @Column(name = "img_text", length = 2000)
+    private String imgText;
+
+    @Column(name = "likes", nullable = false, columnDefinition = "int default 0")
+    private int likes;
+    @Column(name = "dislikes", nullable = false, columnDefinition = "int default 0")
+    private int dislikes;
 }

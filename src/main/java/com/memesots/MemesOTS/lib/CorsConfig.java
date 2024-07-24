@@ -15,8 +15,8 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow all origins, methods, and headers for development purposes
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); // Allow all origins
+        // config.setAllowCredentials(true);
+        config.addAllowedOrigin("*"); // Allow all origins
         config.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
         config.addAllowedHeader("*"); // Allow all headers
 

@@ -1,5 +1,10 @@
 package com.memesots.MemesOTS.models;
 
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.memesots.MemesOTS.lib.enums.SignupServices;
 
 import jakarta.persistence.Column;
@@ -27,9 +32,9 @@ public class User {
     private String password;
 
     @Column(name = "user_profile_pic", nullable = true)
-    private String profilePic;
+    private String profile_pic;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "signup_service", nullable = false)
-    private SignupServices signupService;
+    private SignupServices signup_service;
 }

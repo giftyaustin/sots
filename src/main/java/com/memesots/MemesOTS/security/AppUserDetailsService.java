@@ -30,5 +30,20 @@ public class AppUserDetailsService implements UserDetailsService {
                 .build();
         return userDetails;
     }
+
+
+    public UserDetails loadUserByEmail (String email){
+        Optional<User> userObj = UserRepository.findByEmail(email);
+        if(!userObj.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        User user = userObj.get();
+       AppUserDetails userDetails = new AppUserDetails();
+       userDetails.setId(user.getId());
+       userDetails.setUsername(user.getUsername());
+       userDetails.setPassword(user.getPassword());
+       userDetails.setEmail(email);
+       return userDetails;
+    }
     
 }
